@@ -1,44 +1,41 @@
 #Web Scraper
 
 import time
-import fileinput
 import csv
+import importlib
+import keys_scraper
+
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
 from selenium import webdriver
-from keys_scraper.py import inputs
 
 # choose your own URL
-url = ("www.google.com")
-
-keyscraper =  keys_scraper.inputs
+# deleting or adding a hashtag before chrome_options will toggle browser view
 PATH = "Z:\chromedriver.exe"
+url = ("http://www.google.com")
+keyscraper =  keys_scraper.input1
 chrome_options = Options()
-
-# deleting the hashtag before chrome_options will make the browswer window dissapera
 # chrome_options.add_argument("--headless")
-
 driver = webdriver.Chrome(PATH, options=chrome_options)
 driver.get(url)
-
 time.sleep(1)
 
 # start count where program fails if you have to re run program
 count = 0
-
 
 # start of for loop, begins at item in list that correlates with count
 for i in keyscraper[count:]:
     try:
         count = count + 1
 
-        #this originally filled a form with zip codes, thus the padding of 0's if len(str(i)) < 5
+        #this originally filled a form with zip codes, thus the padding of 0's if
 
         VariableOne = str(i).zfill(5)
         i = i + 1
 
-        # replace x path with the xpath of form submission path
-        Input_VarOne = driver.find_element_by_xpath('//*[@id="ContentPlaceHolder1_tZip"]')
+        # replace element id with the element id of form entry
+        Input_VarOne = driver.find_element_by_id('ContentPlaceHolder1_tZip')
 
         # clears the form submission
         Input_VarOne.clear()
@@ -48,12 +45,13 @@ for i in keyscraper[count:]:
         time.sleep(1)
 
         # replace the x path with xpath of submission button, these lines click the button Then wait X Seconds
-        btn_submit = driver.find_element_by_xpath('//*[@id="ContentPlaceHolder1_btnFind"]')
+        btn_submit = driver.find_element_by_id('ContentPlaceHolder1_btnFind')
         btn_submit.click()
         time.sleep(1)
 
-        # try loop finds data from the webpage after the form has been submitted, it then opens a .csv and saves the data to a new line in the .csv
-        # replace x paths where paths of data you are trying to scrape
+        # try loop finds inputs from the webpage after the form has been submitted, it then opens a .csv and saves the inputs to a new line in the .csv
+        # replace x paths where paths of inputs you are trying to scrape
+        #if element has id or name, the program will run faster. use find by xpath as last resort
         try:    
             Data_1 = driver.find_element_by_xpath('//*[@id="form1"]/div[3]/div[2]/div/table[2]/tbody/tr[3]/td[1]').text
             Data_2 = driver.find_element_by_xpath('//*[@id="form1"]/div[3]/div[2]/div/table[2]/tbody/tr[3]/td[2]').text
@@ -71,7 +69,7 @@ for i in keyscraper[count:]:
             # choose .csv name
             f = open("‪Something_Something.csv", "a") 
             #set newline on file up before the loop runs
-            f.write("\n" + VariableOne + "," + Data_One + "," + Data_Two + "," + Data_Three + "," + Data_Four + "," + Data_5 + "," + Data_5 + "," + Data_6 + "," + Data_7 + "," + Data_8 + "," + Data_10 + "," + Data_11 + "," + Data_12)
+            f.write("\n" + VariableOne + "," + Data_1 + "," + Data_2 + "," + Data_3 + "," + Data_4 + "," + Data_5 + "," + Data_5 + "," + Data_6 + "," + Data_7 + "," + Data_8 + "," + Data_10 + "," + Data_11 + "," + Data_12)
             f.close()
 
             # Trouble Shooting Print
@@ -79,13 +77,13 @@ for i in keyscraper[count:]:
             # print(VariableOne,Data_1,Data_2,Data_3,Data_4,Data_5,Data_6,Data_7,Data_8,Data_9,Data_10,Data_11,Data_12)
 
             # rests program for x seconds everytime the count is exactly divisble by n then prints the count
-            n = 90
+            n = 50
             if count % n == 0:
-                time.sleep(15)
+                time.sleep(30)
                 print(count)
             #print(count, VariableOne)
 
-        # This except skips form entries that are read as invalid
+        # skips form entries that are read as invalid
         except NoSuchElementException:
             pass
             print(count, "Error, invalid input", VariableOne)
@@ -93,12 +91,13 @@ for i in keyscraper[count:]:
             f.write("\n" + VariableOne + "," + "No Data")
             f.close()
 
-        # This except breaks the program if your connection is refused
+        # This breaks the program if your connection is refused
         except ConnectionRefusedError:
             driver.quit()
             break 
-    # This Except ends the program after all item in keyscraper have been iterated through   
+    # This ends the program after all item in keyscraper have been iterated through   
     except StopIteration:
      break
+print(count)
 
 
