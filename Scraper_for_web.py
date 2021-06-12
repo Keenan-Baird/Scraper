@@ -11,8 +11,7 @@ from keys_scraper.py import  data
 # choose your own URL
 url = ("www.google.com")
 
-keyscraper =  keys_scraper.data
-
+keyscraper =  keys_scraper.inputs
 PATH = "Z:\chromedriver.exe"
 chrome_options = Options()
 
