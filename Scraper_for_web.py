@@ -33,7 +33,7 @@ for i in keyscraper[count:]:
     try:
         count = count + 1
 
-        #this originally filled a form with zip codes, thus the padding of 0's if
+        #this originally filled a form with zip codes, thus the padding of 0's if len(str(i)) < 5
 
         VariableOne = str(i).zfill(5)
         i = i + 1
