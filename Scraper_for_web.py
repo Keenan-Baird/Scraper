@@ -14,7 +14,18 @@ from selenium import webdriver
 # deleting or adding a hashtag before chrome_options will toggle browser view
 PATH = "Z:\chromedriver.exe"
 url = ("http://www.google.com")
-keyscraper =  keys_scraper.input1
+
+input_data1 =  keys_scraper.input1
+input_data2 =  keys_scraper.input2
+input_data3 =  keys_scraper.input3
+input_data4 =  keys_scraper.input4
+input_data5 =  keys_scraper.input5
+input_data6 =  keys_scraper.input6
+input_data7 =  keys_scraper.input7
+input_data8 =  keys_scraper.input8
+input_data9 =  keys_scraper.input9
+input_data10 =  keys_scraper.input10
+
 chrome_options = Options()
 # chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(PATH, options=chrome_options)
@@ -25,7 +36,7 @@ time.sleep(1)
 count = 0
 
 # start of for loop, begins at item in list that correlates with count
-for i in keyscraper[count:]:
+for i in input_data1[count:]:
     try:
         count = count + 1
 
