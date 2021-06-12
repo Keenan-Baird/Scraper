@@ -6,7 +6,7 @@ import csv
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
-from keys_scraper.py import  data
+from keys_scraper.py import inputs
 
 # choose your own URL
 url = ("www.google.com")
